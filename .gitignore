@@ -1,0 +1,9 @@
+# private survey responses
+*.csv
+
+# dev sketches + admin tools (kept local)
+sketches/
+
+# os / editor
+.DS_Store
+*.swp

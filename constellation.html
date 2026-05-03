@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>onion constellation</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #f5f5f5; }
+    body { font-family: monospace; touch-action: none; -webkit-tap-highlight-color: transparent; }
+    canvas { display: block; touch-action: none; }
+
+    .picker {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 14px;
+      z-index: 10;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 92vw;
+    }
+    .picker.top { top: 24px; }
+
+    @media (max-width: 768px) {
+      .person .dot { width: 44px; height: 44px; }
+      .person .name { font-size: 11px; }
+      .hint { display: none; }
+      .corner-nav { left: 16px; bottom: 24px; gap: 14px; }
+      .corner-nav a { font-size: 12px; padding: 4px 0; }
+    }
+
+    .person {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .person .dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background: #888;
+    }
+    .person .name {
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, 0.5);
+      transition: color 0.18s ease;
+    }
+    .person:hover .dot { transform: scale(1.1); }
+    .person.inactive .dot { opacity: 0.28; }
+    .person.inactive .name { color: rgba(0, 0, 0, 0.25); }
+    .person.active .dot {
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.5), 0 0 0 5px rgba(255, 255, 255, 0.7);
+    }
+    .person.active .name { color: rgba(0, 0, 0, 0.85); }
+
+    .hint {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      font-size: 10px;
+      color: rgba(0, 0, 0, 0.4);
+      letter-spacing: 0.08em;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .corner-nav {
+      position: fixed;
+      left: 24px;
+      bottom: 24px;
+      display: flex;
+      gap: 14px;
+      z-index: 10;
+    }
+    .corner-nav a {
+      font-size: 10px;
+      color: rgba(0, 0, 0, 0.45);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+    .corner-nav a:hover { color: rgba(0, 0, 0, 0.85); }
+    .corner-nav a.active { color: rgba(0, 0, 0, 0.85); font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="picker top" id="people-picker"></div>
+  <div class="hint">click a node to toggle them in the constellation</div>
+  <nav class="corner-nav">
+    <a href="index.html">onion</a>
+    <a href="constellation.html" class="active">constellation</a>
+    <a href="flower.html">flower</a>
+    <a href="all.html">all</a>
+  </nav>
+  <script src="seed_data.js?v=21"></script>
+  <script src="sketch_constellation.js?v=21"></script>
+</body>
+</html>

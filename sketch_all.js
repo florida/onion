@@ -81,10 +81,23 @@ function buildPair(friend, view, aspect) {
     };
   }
   const rings = ringsFromMonths(friend.knownMonths);
+  const myMixed    = blendPalettes(friend.mine.palette,   friend.theirs.palette, PALETTE_BLEND);
+  const theirMixed = blendPalettes(friend.theirs.palette, friend.mine.palette,   PALETTE_BLEND);
   return {
-    top:    make({ rings, size: friend.mine.effort,   stroke: friend.mine.mutualKnowledge,   saturate: friend.mine.likeRelationship,   colors: friend.mine.palette }),
-    bottom: make({ rings, size: friend.theirs.effort, stroke: friend.theirs.mutualKnowledge, saturate: friend.theirs.likeRelationship, colors: friend.theirs.palette }),
+    top:    make({ rings, size: friend.mine.effort,   stroke: friend.mine.mutualKnowledge,   saturate: friend.mine.likeRelationship,   colors: myMixed }),
+    bottom: make({ rings, size: friend.theirs.effort, stroke: friend.theirs.mutualKnowledge, saturate: friend.theirs.likeRelationship, colors: theirMixed }),
   };
+}
+
+const PALETTE_BLEND = 0.3;
+function blendPalettes(myPal, theirPal, amount) {
+  if (!myPal || myPal.length === 0)       return theirPal ?? ['#888888'];
+  if (!theirPal || theirPal.length === 0) return myPal;
+  return myPal.map((myHex, i) => {
+    const theirHex = theirPal[i % theirPal.length];
+    const c = lerpColor(color(myHex), color(theirHex), amount);
+    return colorToHex(c);
+  });
 }
 
 function buildOnion({ rings, size, stroke, saturate, colors, aspect }) {

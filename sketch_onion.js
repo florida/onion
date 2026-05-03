@@ -92,18 +92,21 @@ function drawTile(cx, cy, view) {
 }
 
 function drawAllViews() {
-  const isMobile = windowWidth <= 768;
-  const cellW = isMobile ? windowWidth        : windowWidth / SUB_VIEWS.length;
-  const cellH = isMobile ? windowHeight / SUB_VIEWS.length : windowHeight;
-  const tileSize = min(cellW, cellH) * 0.78;
+  const isMobile        = windowWidth <= 768;
+  const reservedTop     = isMobile ? 80  : 60;
+  const reservedBottom  = isMobile ? 220 : 90;
+  const usableH         = max(windowHeight - reservedTop - reservedBottom, 200);
+  const cellW           = isMobile ? windowWidth        : windowWidth / SUB_VIEWS.length;
+  const cellH           = isMobile ? usableH / SUB_VIEWS.length : usableH;
+  const tileSize        = min(cellW, cellH) * 0.72;
 
   const oldS = s;
   s = tileSize;
 
   for (let i = 0; i < SUB_VIEWS.length; i++) {
-    const v = SUB_VIEWS[i];
-    const cx = isMobile ? cellW / 2          : (i + 0.5) * cellW;
-    const cy = isMobile ? (i + 0.5) * cellH  : cellH / 2;
+    const v  = SUB_VIEWS[i];
+    const cx = isMobile ? cellW / 2 : (i + 0.5) * cellW;
+    const cy = reservedTop + (isMobile ? (i + 0.5) * cellH : cellH / 2);
     drawTile(cx, cy, v);
 
     push();

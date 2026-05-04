@@ -506,7 +506,7 @@ window.SEED_FRIENDS = [
     }
   },
   {
-    "n": "Elle Mundy",
+    "n": "E",
     "d": 40,
     "s": {
       "a": 36,
